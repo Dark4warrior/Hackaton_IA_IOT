@@ -61,9 +61,9 @@ export default function DevicesPage() {
           <div key={device._id} className="p-4 border rounded-lg shadow-md">
             <h2 className="text-lg font-semibold">{device.name}</h2>
             <p className="text-gray-600">📍 {device.location}</p>
-            <p>💡 État: {device.state ? "Allumé" : "Éteint"}</p>
-            <p>🎨 Couleur: <span style={{ color: device.color }}>{device.color}</span></p>
-            <p>🔆 Luminosité: {device.brightness}%</p>
+            <p>État: {device.state ? "Allumé" : "Éteint"}</p>
+            <p>Couleur: <span style={{ color: device.color }}>{device.color}</span></p>
+            <p>Luminosité: {device.brightness}%</p>
 
             {/*Bouton de suppression*/}
             <button
