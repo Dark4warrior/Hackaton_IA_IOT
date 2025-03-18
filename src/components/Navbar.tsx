@@ -14,10 +14,7 @@ const Navbar = () => {
             Appareils
           </Link>
           <Link href="/commands" className="navbar-link">
-            Vues par pièce
-          </Link>
-          <Link href="/voice" className="navbar-link">
-            Historique des commandes
+          Historique des commandes
           </Link>
         </div>
       </div>
