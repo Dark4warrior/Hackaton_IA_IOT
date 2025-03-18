@@ -20,8 +20,8 @@ export async function processCommand(text: string) {
     }
 
     si action_key = POWER, action_value = true ou false
-    si action_key = COLOR, action_value = couleur en hexadécimal
-    si action_key = BRIGHTNESS, action_value = valeur entre 0 et 100
+    si action_key = COLOR, action_value = couleur avec le format hexadécimal
+    si action_key = BRIGHTNESS, action_value = valeur entre 0 et 100 
     
     Commande: "${text}"
   `;

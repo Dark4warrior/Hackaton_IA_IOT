@@ -13,14 +13,26 @@ export async function GET() {
   }
 }
 
-// POST new device
+// POST device
 export async function POST(request: Request) {
   try {
+    const { name, location } = await request.json();
+
+    if (!name || !location) {
+      return NextResponse.json(
+        { error: "Le nom et l'emplacement sont requis" },
+        { status: 400 }
+      );
+    }
+
     await dbConnect();
-    const body = await request.json();
-    const device = await Device.create(body);
-    return NextResponse.json(device, { status: 201 });
+    const newDevice = await Device.create({ name, location, state: false, color: "#FFFFFF", brightness: 100 });
+
+    return NextResponse.json(newDevice);
   } catch (error) {
-    return NextResponse.json({ error: "Erreur lors de la création du device" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erreur lors de l'ajout du device" },
+      { status: 500 }
+    );
   }
-} 
+}

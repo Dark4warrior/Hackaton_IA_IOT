@@ -38,18 +38,19 @@ export async function PUT(
 }
 
 // DELETE device
-export async function DELETE(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   try {
     await dbConnect();
-    const device = await Device.findByIdAndDelete(params.id);
-    if (!device) {
-      return NextResponse.json({ error: "Device non trouvé" }, { status: 404 });
+
+    const deletedDevice = await Device.findByIdAndDelete(params.id);
+
+    if (!deletedDevice) {
+      return NextResponse.json({ error: "Device introuvable" }, { status: 404 });
     }
+
     return NextResponse.json({ message: "Device supprimé avec succès" });
   } catch (error) {
     return NextResponse.json({ error: "Erreur lors de la suppression du device" }, { status: 500 });
   }
-} 
+}
+
