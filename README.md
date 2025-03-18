@@ -21,17 +21,74 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Learn More
+## API Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+Notre API est actuellement en développement local. Voici les endpoints disponibles :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Devices
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Méthode | Endpoint              | Description                      | Paramètres                                                                                                                                    | Réponse                 |
+| ------- | --------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| GET     | `/api/v1/devices`     | Récupérer tous les appareils     | -                                                                                                                                             | Liste des appareils     |
+| GET     | `/api/v1/devices/:id` | Récupérer un appareil spécifique | `id`: ID de l'appareil                                                                                                                        | Détails de l'appareil   |
+| POST    | `/api/v1/devices`     | Créer un nouvel appareil         | `name`: Nom de l'appareil<br>`location`: Emplacement<br>`state`: État (boolean)<br>`color`: Couleur (hex)<br>`brightness`: Luminosité (0-100) | Appareil créé           |
+| PUT     | `/api/v1/devices/:id` | Mettre à jour un appareil        | `id`: ID de l'appareil<br>+ champs à modifier                                                                                                 | Appareil mis à jour     |
+| DELETE  | `/api/v1/devices/:id` | Supprimer un appareil            | `id`: ID de l'appareil                                                                                                                        | Message de confirmation |
 
-## API Routes
+### Commands
 
-This directory contains example API routes for the headless API app.
+| Méthode | Endpoint               | Description                       | Paramètres                                                                             | Réponse                 |
+| ------- | ---------------------- | --------------------------------- | -------------------------------------------------------------------------------------- | ----------------------- |
+| GET     | `/api/v1/commands`     | Récupérer toutes les commandes    | -                                                                                      | Liste des commandes     |
+| GET     | `/api/v1/commands/:id` | Récupérer une commande spécifique | `id`: ID de la commande                                                                | Détails de la commande  |
+| POST    | `/api/v1/commands`     | Créer une nouvelle commande       | `device`: ID de l'appareil<br>`action`: Objet contenant `action_key` et `action_value` | Commande créée          |
+| PUT     | `/api/v1/commands/:id` | Mettre à jour une commande        | `id`: ID de la commande<br>+ champs à modifier                                         | Commande mise à jour    |
+| DELETE  | `/api/v1/commands/:id` | Supprimer une commande            | `id`: ID de la commande                                                                | Message de confirmation |
 
-For more details, see [route.js file convention](https://nextjs.org/docs/app/api-reference/file-conventions/route).
+### Traitement de commandes vocales
+
+| Méthode | Endpoint                  | Description                 | Paramètres                   | Réponse                      |
+| ------- | ------------------------- | --------------------------- | ---------------------------- | ---------------------------- |
+| POST    | `/api/v1/process-command` | Traiter une commande vocale | `text`: Texte de la commande | Commande traitée et formatée |
+
+#### Exemple de requête pour traiter une commande vocale
+
+```bash
+curl -X POST http://localhost:3000/api/v1/process-command \
+-H "Content-Type: application/json" \
+-d '{
+  "text": "Allume la lumière du salon"
+}'
+```
+
+#### Exemple de réponse
+
+```json
+{
+  "message": "Commande traitée avec succès",
+  "processedCommand": {
+    "device": {
+      "location": "salon",
+      "name": "lumière"
+    },
+    "action": {
+      "action_key": "POWER",
+      "action_value": "ON"
+    }
+  },
+  "command": {
+    "_id": "60f1a5b3e6b3f32f948e9a7c",
+    "device": "60f1a5b3e6b3f32f948e9a7b",
+    "action": {
+      "action_key": "POWER",
+      "action_value": "ON"
+    },
+    "createdAt": "2023-07-16T12:34:56.789Z",
+    "updatedAt": "2023-07-16T12:34:56.789Z"
+  }
+}
+```
+
+## Tests
+
+Tous les tests sont effectués en local. Pour tester l'API, vous pouvez utiliser des outils comme Postman ou curl.
