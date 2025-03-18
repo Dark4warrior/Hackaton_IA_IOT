@@ -2,7 +2,7 @@ import call from "@/lib/api/call";
 import Head from "next/head";
 
 export default async function Page({ params }: any) {
-  const slug = await params.slug;
+  const slug = params.slug;
   const res = await call("/hello/" + slug);
   const data = await res.json();
 

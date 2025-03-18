@@ -1,0 +1,57 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Titre principal */
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Message si aucune commande */
+  .empty-message {
+    font-size: 16px;
+    color: gray;
+    text-align: center;
+  }
+  
+  /* Grille des commandes */
+  .commands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  /* Carte commande */
+  .command-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+  
+  /* Nom du device */
+  .device-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  /* Action de la commande */
+  .action {
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  /* Date de création / mise à jour */
+  .timestamp {
+    font-size: 14px;
+    color: gray;
+    margin-top: 5px;
+  }
+  

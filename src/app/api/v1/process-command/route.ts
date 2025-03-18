@@ -27,15 +27,37 @@ export async function POST(request: Request) {
       name: processedCommand.device.name
     });
 
+    console.log("device: ", device);
+
     if (!device) {
-      device = await Device.create({
-        name: processedCommand.device.name,
-        location: processedCommand.device.location,
-        state: false,
-        color: "#FFFFFF",
-        brightness: 100
-      });
+      return NextResponse.json(
+        { error: "Device introuvable. Vérifiez le nom et l'emplacement." },
+        { status: 404 }
+      );
     }
+
+     // Mise à jour des données du device
+     const updateFields: any = {};
+    
+     switch (processedCommand.action.action_key) {
+       case "POWER":
+         updateFields.state = processedCommand.action.action_value;
+         break;
+       case "COLOR":
+         updateFields.color = processedCommand.action.action_value;
+         break;
+       case "BRIGHTNESS":
+         updateFields.brightness = processedCommand.action.action_value;
+         break;
+       default:
+         return NextResponse.json(
+           { error: "Action non reconnue" },
+           { status: 400 }
+         );
+     }
+ 
+     // Appliquer les mises à jour
+     await Device.updateOne({ _id: device._id }, { $set: updateFields });
 
     // Créer la commande
     const command = await Command.create({
@@ -44,8 +66,8 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({
-      message: "Commande traitée avec succès",
-      processedCommand,
+      message: "Commande traitée et device mis à jour",
+      updatedFields: updateFields,
       command
     });
 
