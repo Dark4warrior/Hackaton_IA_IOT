@@ -1,5 +1,11 @@
-import Head from "next/head";
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import "../styles/globals.css";
 
+export const metadata: Metadata = {
+  title: "Smart Home",
+  description: "Interface de gestion des lumières connectées",
+};
 
 export default function RootLayout({
   children,
@@ -8,14 +14,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <head>
-        <Head>
-          <title>jesaispasquoi</title>
-          <meta name="description" content="jesaispasquoi" />
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-      </head>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        <main className="container mx-auto px-4 py-8">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
