@@ -53,12 +53,15 @@ Notre API est actuellement en développement local. Voici les endpoints disponib
 
 #### Exemple de requête pour traiter une commande vocale
 
+!!! il faut bien indiquer le bon nom du dispositif et le bon nom de la localisation !!!
+
 ```bash
 curl -X POST http://localhost:3000/api/v1/process-command \
 -H "Content-Type: application/json" \
 -d '{
   "text": "Allume la lumière du salon"
 }'
+
 ```
 
 #### Exemple de réponse

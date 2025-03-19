@@ -29,7 +29,7 @@ export default function DevicesPage() {
   const addDevice = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newDevice = { name, location };
+    const newDevice = { name: name.toLowerCase(), location: location.toLowerCase() };
     const res = await fetch("/api/v1/devices", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

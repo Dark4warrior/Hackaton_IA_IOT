@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     await dbConnect();
 
     // Trouver ou créer le device
+    console.log("processedCommand: ", processedCommand);
     let device = await Device.findOne({
       location: processedCommand.device.location,
       name: processedCommand.device.name
@@ -36,28 +37,28 @@ export async function POST(request: Request) {
       );
     }
 
-     // Mise à jour des données du device
-     const updateFields: any = {};
-    
-     switch (processedCommand.action.action_key) {
-       case "POWER":
-         updateFields.state = processedCommand.action.action_value;
-         break;
-       case "COLOR":
-         updateFields.color = processedCommand.action.action_value;
-         break;
-       case "BRIGHTNESS":
-         updateFields.brightness = processedCommand.action.action_value;
-         break;
-       default:
-         return NextResponse.json(
-           { error: "Action non reconnue" },
-           { status: 400 }
-         );
-     }
- 
-     // Appliquer les mises à jour
-     await Device.updateOne({ _id: device._id }, { $set: updateFields });
+    // Mise à jour des données du device
+    const updateFields: any = {};
+
+    switch (processedCommand.action.action_key) {
+      case "POWER":
+        updateFields.state = processedCommand.action.action_value;
+        break;
+      case "COLOR":
+        updateFields.color = processedCommand.action.action_value;
+        break;
+      case "BRIGHTNESS":
+        updateFields.brightness = processedCommand.action.action_value;
+        break;
+      default:
+        return NextResponse.json(
+          { error: "Action non reconnue" },
+          { status: 400 }
+        );
+    }
+
+    // Appliquer les mises à jour
+    await Device.updateOne({ _id: device._id }, { $set: updateFields });
 
     // Créer la commande
     const command = await Command.create({

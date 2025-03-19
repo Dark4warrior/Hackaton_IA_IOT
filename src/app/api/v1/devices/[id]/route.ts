@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Device from "@/models/Device";
+import Command from "@/models/Command";
 
 // GET single device
 export async function GET(
@@ -42,6 +43,10 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
   try {
     await dbConnect();
 
+    // Supprime d'abord les commandes associées
+    await Command.deleteMany({ device: params.id });
+
+    // Puis supprime l'appareil
     const deletedDevice = await Device.findByIdAndDelete(params.id);
 
     if (!deletedDevice) {
